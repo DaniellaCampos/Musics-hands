@@ -1,0 +1,5 @@
+dataset_unificado\acorde_do_1dedo\acorde_do_1dedo_16.jpg
+dataset_unificado\acorde_do_1dedo\acorde_do_1dedo_2.jpg
+dataset_unificado\acorde_do_1dedo\acorde_do_1dedo_3.jpg
+dataset_unificado\acorde_do_1dedo\acorde_do_1dedo_35.jpg
+dataset_unificado\acorde_do_1dedo\acorde_do_1dedo_4.jpg
