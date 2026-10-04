@@ -48,6 +48,8 @@ def main():
     rank, world = args.rank, args.world_size
 
     log(rank, f"conectando con {args.master_addr}:{args.master_port} (world_size={world})...")
+    if rank == 0 and world > 1:
+        log(rank, "esperando a los demás ranks (hasta 5 min); es normal que no se vea nada más, no lo interrumpas")
     dist.init_process_group("gloo", init_method=f"tcp://{args.master_addr}:{args.master_port}",
                             rank=rank, world_size=world, timeout=timedelta(minutes=5))
     log(rank, "conectado al grupo")

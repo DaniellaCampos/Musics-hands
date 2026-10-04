@@ -132,6 +132,27 @@ python realtime.py --model hand_model.pt
 - Si las dos manos muestran números (1–5), arriba aparece `Total: N`.
 - Pulsen `q` para salir. Con `--camera 1` se cambia de cámara y con `--threshold 0.7` se exige más confianza.
 
+## Paso 8: Dashboard web para tocar música con las manos
+
+Corre en el navegador: cámara, MediaPipe (versión JavaScript), el MLP entrenado y un sintetizador hecho con Web Audio.
+
+```powershell
+python export_web_model.py                       # hand_model.pt -> web/model.json (repetir tras cada entrenamiento)
+python -m http.server 8000 --directory web
+```
+
+Abran **http://localhost:8000** en Chrome o Edge y pulsen **Encender**. Hace falta internet, porque MediaPipe se descarga de un CDN.
+
+| Modo | Qué suena |
+|---|---|
+| **Acordes por gesto** | Cada mano toca el acorde del gesto que reconoce el modelo: 1 dedo = Do, 2 = Re m, te quiero = Mi m, 4 = Fa, 5 = Sol, rock = La m, pinch = Si°. Con el puño cerrado esa mano se calla. La izquierda suena una octava más grave. |
+| **Escala por dedos** | Se suman los dedos de las dos manos (1–10), contados con reglas geométricas, y suena ese grado de la escala de Do. |
+
+- Hay 4 instrumentos (Pad, Órgano, Pulso, Chip) y controles de volumen, reverb y confianza mínima del modelo.
+- Un acorde solo cambia cuando el gesto se mantiene durante 4 frames, para evitar parpadeos.
+- Si falta `web/model.json`, el modo de acordes usa el número de dedos (1–5 → Do…Sol).
+- `count_fingers.py` es la versión en Python del contador de dedos: `python count_fingers.py` abre la webcam y `--eval` mide la precisión.
+
 ---
 
 ## Ensayo previo en una sola PC

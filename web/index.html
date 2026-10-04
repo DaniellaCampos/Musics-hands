@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Musics Hands</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <h1>Musics <em>Hands</em></h1>
+      <p>Reconocimiento de gestos con IA · cada gesto de la mano toca un acorde</p>
+    </div>
+    <ul class="leds" aria-label="Estado">
+      <li id="led-cam"><i></i>cámara</li>
+      <li id="led-audio"><i></i>audio</li>
+      <li class="perf" title="Cuadros por segundo · tiempo de reconocimiento por cuadro · procesador usado">
+        <span id="fps">--</span> fps · <span id="det">--</span> ms · <span id="delegate">--</span>
+      </li>
+    </ul>
+    <canvas id="scope" aria-hidden="true"></canvas>
+  </header>
+
+  <main class="tv">
+    <article class="hand idle" data-side="izq">
+      <header><span class="hand-tag">Mano izquierda</span><span class="hand-state">sin mano</span></header>
+      <div class="hand-body">
+        <div class="hand-count">0</div>
+        <ol class="fingers">
+          <li>pul</li><li>índ</li><li>med</li><li>anu</li><li>meñ</li>
+        </ol>
+      </div>
+      <div class="hand-gesture">–</div>
+      <div class="hand-chord">–</div>
+    </article>
+
+    <section class="center">
+      <div class="cam">
+        <div class="mirror">
+          <video id="video" playsinline muted></video>
+          <canvas id="overlay"></canvas>
+        </div>
+      </div>
+      <div class="readout" aria-live="polite">
+        <div class="readout-main" id="readout-main">–</div>
+        <div class="readout-sub" id="readout-sub">Muestra una mano a la cámara</div>
+      </div>
+    </section>
+
+    <article class="hand idle" data-side="der">
+      <header><span class="hand-tag">Mano derecha</span><span class="hand-state">sin mano</span></header>
+      <div class="hand-body">
+        <div class="hand-count">0</div>
+        <ol class="fingers">
+          <li>pul</li><li>índ</li><li>med</li><li>anu</li><li>meñ</li>
+        </ol>
+      </div>
+      <div class="hand-gesture">–</div>
+      <div class="hand-chord">–</div>
+    </article>
+  </main>
+
+  <section class="legend">
+    <h3 id="legend-title">Gestos</h3>
+    <ol id="legend-cells"></ol>
+  </section>
+
+  <section class="piano" id="piano" aria-hidden="true"></section>
+
+  <footer class="controls" id="controls">
+    <label class="ctl ctl-cam">Cámara
+      <select id="camera" class="select" disabled><option>Disponible al iniciar</option></select>
+    </label>
+    <div class="ctl">Modo
+      <div class="seg" id="mode" role="radiogroup">
+        <button data-value="gesture" aria-pressed="true">Acordes por gesto</button>
+        <button data-value="count" aria-pressed="false">Escala por dedos</button>
+      </div>
+    </div>
+    <div class="ctl">Instrumento
+      <div class="seg" id="instrument" role="radiogroup">
+        <button data-value="pad" aria-pressed="true">Pad</button>
+        <button data-value="organo" aria-pressed="false">Órgano</button>
+        <button data-value="pulso" aria-pressed="false">Pulso</button>
+        <button data-value="chip" aria-pressed="false">Chip</button>
+      </div>
+    </div>
+    <label class="ctl ctl-range">Volumen <output id="vol-out">70</output>
+      <input id="volume" type="range" min="0" max="1" step="0.01" value="0.7">
+    </label>
+    <label class="ctl ctl-range">Reverb <output id="rev-out">35</output>
+      <input id="reverb" type="range" min="0" max="1" step="0.01" value="0.35">
+    </label>
+    <div class="ctl-actions">
+      <button id="panic" class="btn-ghost">Silenciar</button>
+      <button id="fullscreen" class="btn-ghost">Pantalla completa</button>
+    </div>
+    <p class="keys-hint"><kbd>F</kbd> pantalla completa · <kbd>H</kbd> ocultar controles · <kbd>Espacio</kbd> silenciar</p>
+  </footer>
+
+  <div class="gate" id="gate">
+    <p class="gate-kicker">Reconocimiento de gestos con IA</p>
+    <h2>Musics<br>Hands</h2>
+    <p class="gate-lead">Cada gesto de la mano toca un acorde. Con dos manos, dos acordes a la vez.</p>
+    <button id="start" class="btn-start">Iniciar</button>
+    <p class="gate-note" id="gate-note">El navegador pedirá permiso para usar la cámara.</p>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
